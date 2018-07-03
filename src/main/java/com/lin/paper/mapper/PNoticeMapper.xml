@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lin.paper.mapper.PNoticeMapper" >
+  <resultMap id="BaseResultMap" type="com.lin.paper.pojo.PNotice" >
+    <id column="noticeId" property="noticeid" jdbcType="VARCHAR" />
+    <result column="noticeTitle" property="noticetitle" jdbcType="VARCHAR" />
+    <result column="fileUrl" property="fileurl" jdbcType="VARCHAR" />
+    <result column="downloads" property="downloads" jdbcType="INTEGER" />
+    <result column="watchNum" property="watchnum" jdbcType="INTEGER" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="updateTime" property="updatetime" jdbcType="TIMESTAMP" />
+    <result column="noticeState" property="noticestate" jdbcType="INTEGER" />
+    <result column="columnId" property="columnid" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.lin.paper.pojo.PNotice" extends="BaseResultMap" >
+    <result column="noticeContent" property="noticecontent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    noticeId, noticeTitle, fileUrl, downloads, watchNum, createTime, updateTime, noticeState, 
+    columnId
+  </sql>
+  <sql id="Blob_Column_List" >
+    noticeContent
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.lin.paper.pojo.PNoticeExample" useCache="true">
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from p_notice
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.lin.paper.pojo.PNoticeExample" useCache="true">
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from p_notice
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" useCache="true">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from p_notice
+    where noticeId = #{noticeid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from p_notice
+    where noticeId = #{noticeid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.lin.paper.pojo.PNoticeExample" >
+    delete from p_notice
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.lin.paper.pojo.PNotice" >
+    insert into p_notice (noticeId, noticeTitle, fileUrl, 
+      downloads, watchNum, createTime, 
+      updateTime, noticeState, columnId, 
+      noticeContent)
+    values (#{noticeid,jdbcType=VARCHAR}, #{noticetitle,jdbcType=VARCHAR}, #{fileurl,jdbcType=VARCHAR}, 
+      #{downloads,jdbcType=INTEGER}, #{watchnum,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{updatetime,jdbcType=TIMESTAMP}, #{noticestate,jdbcType=INTEGER}, #{columnid,jdbcType=VARCHAR}, 
+      #{noticecontent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lin.paper.pojo.PNotice" >
+    insert into p_notice
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="noticeid != null" >
+        noticeId,
+      </if>
+      <if test="noticetitle != null" >
+        noticeTitle,
+      </if>
+      <if test="fileurl != null" >
+        fileUrl,
+      </if>
+      <if test="downloads != null" >
+        downloads,
+      </if>
+      <if test="watchnum != null" >
+        watchNum,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="updatetime != null" >
+        updateTime,
+      </if>
+      <if test="noticestate != null" >
+        noticeState,
+      </if>
+      <if test="columnid != null" >
+        columnId,
+      </if>
+      <if test="noticecontent != null" >
+        noticeContent,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="noticeid != null" >
+        #{noticeid,jdbcType=VARCHAR},
+      </if>
+      <if test="noticetitle != null" >
+        #{noticetitle,jdbcType=VARCHAR},
+      </if>
+      <if test="fileurl != null" >
+        #{fileurl,jdbcType=VARCHAR},
+      </if>
+      <if test="downloads != null" >
+        #{downloads,jdbcType=INTEGER},
+      </if>
+      <if test="watchnum != null" >
+        #{watchnum,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="noticestate != null" >
+        #{noticestate,jdbcType=INTEGER},
+      </if>
+      <if test="columnid != null" >
+        #{columnid,jdbcType=VARCHAR},
+      </if>
+      <if test="noticecontent != null" >
+        #{noticecontent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.lin.paper.pojo.PNoticeExample" resultType="java.lang.Integer" useCache="true">
+    select count(*) from p_notice
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update p_notice
+    <set >
+      <if test="record.noticeid != null" >
+        noticeId = #{record.noticeid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.noticetitle != null" >
+        noticeTitle = #{record.noticetitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fileurl != null" >
+        fileUrl = #{record.fileurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.downloads != null" >
+        downloads = #{record.downloads,jdbcType=INTEGER},
+      </if>
+      <if test="record.watchnum != null" >
+        watchNum = #{record.watchnum,jdbcType=INTEGER},
+      </if>
+      <if test="record.createtime != null" >
+        createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updatetime != null" >
+        updateTime = #{record.updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.noticestate != null" >
+        noticeState = #{record.noticestate,jdbcType=INTEGER},
+      </if>
+      <if test="record.columnid != null" >
+        columnId = #{record.columnid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.noticecontent != null" >
+        noticeContent = #{record.noticecontent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update p_notice
+    set noticeId = #{record.noticeid,jdbcType=VARCHAR},
+      noticeTitle = #{record.noticetitle,jdbcType=VARCHAR},
+      fileUrl = #{record.fileurl,jdbcType=VARCHAR},
+      downloads = #{record.downloads,jdbcType=INTEGER},
+      watchNum = #{record.watchnum,jdbcType=INTEGER},
+      createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      updateTime = #{record.updatetime,jdbcType=TIMESTAMP},
+      noticeState = #{record.noticestate,jdbcType=INTEGER},
+      columnId = #{record.columnid,jdbcType=VARCHAR},
+      noticeContent = #{record.noticecontent,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update p_notice
+    set noticeId = #{record.noticeid,jdbcType=VARCHAR},
+      noticeTitle = #{record.noticetitle,jdbcType=VARCHAR},
+      fileUrl = #{record.fileurl,jdbcType=VARCHAR},
+      downloads = #{record.downloads,jdbcType=INTEGER},
+      watchNum = #{record.watchnum,jdbcType=INTEGER},
+      createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      updateTime = #{record.updatetime,jdbcType=TIMESTAMP},
+      noticeState = #{record.noticestate,jdbcType=INTEGER},
+      columnId = #{record.columnid,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lin.paper.pojo.PNotice" >
+    update p_notice
+    <set >
+      <if test="noticetitle != null" >
+        noticeTitle = #{noticetitle,jdbcType=VARCHAR},
+      </if>
+      <if test="fileurl != null" >
+        fileUrl = #{fileurl,jdbcType=VARCHAR},
+      </if>
+      <if test="downloads != null" >
+        downloads = #{downloads,jdbcType=INTEGER},
+      </if>
+      <if test="watchnum != null" >
+        watchNum = #{watchnum,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null" >
+        updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="noticestate != null" >
+        noticeState = #{noticestate,jdbcType=INTEGER},
+      </if>
+      <if test="columnid != null" >
+        columnId = #{columnid,jdbcType=VARCHAR},
+      </if>
+      <if test="noticecontent != null" >
+        noticeContent = #{noticecontent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where noticeId = #{noticeid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.lin.paper.pojo.PNotice" >
+    update p_notice
+    set noticeTitle = #{noticetitle,jdbcType=VARCHAR},
+      fileUrl = #{fileurl,jdbcType=VARCHAR},
+      downloads = #{downloads,jdbcType=INTEGER},
+      watchNum = #{watchnum,jdbcType=INTEGER},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      noticeState = #{noticestate,jdbcType=INTEGER},
+      columnId = #{columnid,jdbcType=VARCHAR},
+      noticeContent = #{noticecontent,jdbcType=LONGVARCHAR}
+    where noticeId = #{noticeid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lin.paper.pojo.PNotice" >
+    update p_notice
+    set noticeTitle = #{noticetitle,jdbcType=VARCHAR},
+      fileUrl = #{fileurl,jdbcType=VARCHAR},
+      downloads = #{downloads,jdbcType=INTEGER},
+      watchNum = #{watchnum,jdbcType=INTEGER},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      noticeState = #{noticestate,jdbcType=INTEGER},
+      columnId = #{columnid,jdbcType=VARCHAR}
+    where noticeId = #{noticeid,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lin.paper.mapper.PColumnMapper" >
+  <resultMap id="BaseResultMap" type="com.lin.paper.pojo.PColumn" >
+    <id column="columnId" property="columnid" jdbcType="VARCHAR" />
+    <result column="columnName" property="columnname" jdbcType="VARCHAR" />
+    <result column="parentColumn" property="parentcolumn" jdbcType="VARCHAR" />
+    <result column="columnState" property="columnstate" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="orderBy" property="orderby" jdbcType="INTEGER" />
+    <result column="isParent" property="isparent" jdbcType="INTEGER" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="updateTime" property="updatetime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    columnId, columnName, parentColumn, columnState, type, url, orderBy, isParent, createTime, 
+    updateTime
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.lin.paper.pojo.PColumnExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from p_column
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from p_column
+    where columnId = #{columnid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from p_column
+    where columnId = #{columnid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.lin.paper.pojo.PColumnExample" >
+    delete from p_column
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.lin.paper.pojo.PColumn" >
+    insert into p_column (columnId, columnName, parentColumn, 
+      columnState, type, url, 
+      orderBy, isParent, createTime, 
+      updateTime)
+    values (#{columnid,jdbcType=VARCHAR}, #{columnname,jdbcType=VARCHAR}, #{parentcolumn,jdbcType=VARCHAR}, 
+      #{columnstate,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, 
+      #{orderby,jdbcType=INTEGER}, #{isparent,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{updatetime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lin.paper.pojo.PColumn" >
+    insert into p_column
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="columnid != null" >
+        columnId,
+      </if>
+      <if test="columnname != null" >
+        columnName,
+      </if>
+      <if test="parentcolumn != null" >
+        parentColumn,
+      </if>
+      <if test="columnstate != null" >
+        columnState,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="orderby != null" >
+        orderBy,
+      </if>
+      <if test="isparent != null" >
+        isParent,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="updatetime != null" >
+        updateTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="columnid != null" >
+        #{columnid,jdbcType=VARCHAR},
+      </if>
+      <if test="columnname != null" >
+        #{columnname,jdbcType=VARCHAR},
+      </if>
+      <if test="parentcolumn != null" >
+        #{parentcolumn,jdbcType=VARCHAR},
+      </if>
+      <if test="columnstate != null" >
+        #{columnstate,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="orderby != null" >
+        #{orderby,jdbcType=INTEGER},
+      </if>
+      <if test="isparent != null" >
+        #{isparent,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.lin.paper.pojo.PColumnExample" resultType="java.lang.Integer" >
+    select count(*) from p_column
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update p_column
+    <set >
+      <if test="record.columnid != null" >
+        columnId = #{record.columnid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.columnname != null" >
+        columnName = #{record.columnname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentcolumn != null" >
+        parentColumn = #{record.parentcolumn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.columnstate != null" >
+        columnState = #{record.columnstate,jdbcType=INTEGER},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.url != null" >
+        url = #{record.url,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderby != null" >
+        orderBy = #{record.orderby,jdbcType=INTEGER},
+      </if>
+      <if test="record.isparent != null" >
+        isParent = #{record.isparent,jdbcType=INTEGER},
+      </if>
+      <if test="record.createtime != null" >
+        createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updatetime != null" >
+        updateTime = #{record.updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update p_column
+    set columnId = #{record.columnid,jdbcType=VARCHAR},
+      columnName = #{record.columnname,jdbcType=VARCHAR},
+      parentColumn = #{record.parentcolumn,jdbcType=VARCHAR},
+      columnState = #{record.columnstate,jdbcType=INTEGER},
+      type = #{record.type,jdbcType=INTEGER},
+      url = #{record.url,jdbcType=VARCHAR},
+      orderBy = #{record.orderby,jdbcType=INTEGER},
+      isParent = #{record.isparent,jdbcType=INTEGER},
+      createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      updateTime = #{record.updatetime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lin.paper.pojo.PColumn" >
+    update p_column
+    <set >
+      <if test="columnname != null" >
+        columnName = #{columnname,jdbcType=VARCHAR},
+      </if>
+      <if test="parentcolumn != null" >
+        parentColumn = #{parentcolumn,jdbcType=VARCHAR},
+      </if>
+      <if test="columnstate != null" >
+        columnState = #{columnstate,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="orderby != null" >
+        orderBy = #{orderby,jdbcType=INTEGER},
+      </if>
+      <if test="isparent != null" >
+        isParent = #{isparent,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null" >
+        updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where columnId = #{columnid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lin.paper.pojo.PColumn" >
+    update p_column
+    set columnName = #{columnname,jdbcType=VARCHAR},
+      parentColumn = #{parentcolumn,jdbcType=VARCHAR},
+      columnState = #{columnstate,jdbcType=INTEGER},
+      type = #{type,jdbcType=INTEGER},
+      url = #{url,jdbcType=VARCHAR},
+      orderBy = #{orderby,jdbcType=INTEGER},
+      isParent = #{isparent,jdbcType=INTEGER},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      updateTime = #{updatetime,jdbcType=TIMESTAMP}
+    where columnId = #{columnid,jdbcType=VARCHAR}
+  </update>
+</mapper>

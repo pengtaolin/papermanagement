@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lin.paper.mapper.PPaperMapper" >
+  <resultMap id="BaseResultMap" type="com.lin.paper.pojo.PPaper" >
+    <id column="paperId" property="paperid" jdbcType="VARCHAR" />
+    <result column="paperName" property="papername" jdbcType="VARCHAR" />
+    <result column="fileUrl" property="fileurl" jdbcType="VARCHAR" />
+    <result column="paperState" property="paperstate" jdbcType="INTEGER" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="updateTime" property="updatetime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    paperId, paperName, fileUrl, paperState, createTime, updateTime
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.lin.paper.pojo.PPaperExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from p_paper
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from p_paper
+    where paperId = #{paperid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from p_paper
+    where paperId = #{paperid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.lin.paper.pojo.PPaperExample" >
+    delete from p_paper
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.lin.paper.pojo.PPaper" >
+    insert into p_paper (paperId, paperName, fileUrl, 
+      paperState, createTime, updateTime
+      )
+    values (#{paperid,jdbcType=VARCHAR}, #{papername,jdbcType=VARCHAR}, #{fileurl,jdbcType=VARCHAR}, 
+      #{paperstate,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.lin.paper.pojo.PPaper" >
+    insert into p_paper
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="paperid != null" >
+        paperId,
+      </if>
+      <if test="papername != null" >
+        paperName,
+      </if>
+      <if test="fileurl != null" >
+        fileUrl,
+      </if>
+      <if test="paperstate != null" >
+        paperState,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="updatetime != null" >
+        updateTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="paperid != null" >
+        #{paperid,jdbcType=VARCHAR},
+      </if>
+      <if test="papername != null" >
+        #{papername,jdbcType=VARCHAR},
+      </if>
+      <if test="fileurl != null" >
+        #{fileurl,jdbcType=VARCHAR},
+      </if>
+      <if test="paperstate != null" >
+        #{paperstate,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.lin.paper.pojo.PPaperExample" resultType="java.lang.Integer" >
+    select count(*) from p_paper
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update p_paper
+    <set >
+      <if test="record.paperid != null" >
+        paperId = #{record.paperid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.papername != null" >
+        paperName = #{record.papername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fileurl != null" >
+        fileUrl = #{record.fileurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paperstate != null" >
+        paperState = #{record.paperstate,jdbcType=INTEGER},
+      </if>
+      <if test="record.createtime != null" >
+        createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updatetime != null" >
+        updateTime = #{record.updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update p_paper
+    set paperId = #{record.paperid,jdbcType=VARCHAR},
+      paperName = #{record.papername,jdbcType=VARCHAR},
+      fileUrl = #{record.fileurl,jdbcType=VARCHAR},
+      paperState = #{record.paperstate,jdbcType=INTEGER},
+      createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      updateTime = #{record.updatetime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lin.paper.pojo.PPaper" >
+    update p_paper
+    <set >
+      <if test="papername != null" >
+        paperName = #{papername,jdbcType=VARCHAR},
+      </if>
+      <if test="fileurl != null" >
+        fileUrl = #{fileurl,jdbcType=VARCHAR},
+      </if>
+      <if test="paperstate != null" >
+        paperState = #{paperstate,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null" >
+        updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where paperId = #{paperid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lin.paper.pojo.PPaper" >
+    update p_paper
+    set paperName = #{papername,jdbcType=VARCHAR},
+      fileUrl = #{fileurl,jdbcType=VARCHAR},
+      paperState = #{paperstate,jdbcType=INTEGER},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      updateTime = #{updatetime,jdbcType=TIMESTAMP}
+    where paperId = #{paperid,jdbcType=VARCHAR}
+  </update>
+</mapper>

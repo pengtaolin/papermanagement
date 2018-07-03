@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lin.paper.mapper.PSubjectMapper" >
+  <resultMap id="BaseResultMap" type="com.lin.paper.pojo.PSubject" >
+    <id column="subjectId" property="subjectid" jdbcType="VARCHAR" />
+    <result column="teachId" property="teachid" jdbcType="VARCHAR" />
+    <result column="subjectName" property="subjectname" jdbcType="VARCHAR" />
+    <result column="subjectType" property="subjecttype" jdbcType="VARCHAR" />
+    <result column="subjectState" property="subjectstate" jdbcType="INTEGER" />
+    <result column="createUser" property="createuser" jdbcType="VARCHAR" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="updateTime" property="updatetime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.lin.paper.pojo.PSubject" extends="BaseResultMap" >
+    <result column="subjectContent" property="subjectcontent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    subjectId, teachId, subjectName, subjectType, subjectState, createUser, createTime, 
+    updateTime
+  </sql>
+  <sql id="Blob_Column_List" >
+    subjectContent
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.lin.paper.pojo.PSubjectExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from p_subject
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.lin.paper.pojo.PSubjectExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from p_subject
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from p_subject
+    where subjectId = #{subjectid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from p_subject
+    where subjectId = #{subjectid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.lin.paper.pojo.PSubjectExample" >
+    delete from p_subject
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.lin.paper.pojo.PSubject" >
+    insert into p_subject (subjectId, teachId, subjectName, 
+      subjectType, subjectState, createUser, 
+      createTime, updateTime, subjectContent
+      )
+    values (#{subjectid,jdbcType=VARCHAR}, #{teachid,jdbcType=VARCHAR}, #{subjectname,jdbcType=VARCHAR}, 
+      #{subjecttype,jdbcType=VARCHAR}, #{subjectstate,jdbcType=INTEGER}, #{createuser,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP}, #{subjectcontent,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.lin.paper.pojo.PSubject" >
+    insert into p_subject
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="subjectid != null" >
+        subjectId,
+      </if>
+      <if test="teachid != null" >
+        teachId,
+      </if>
+      <if test="subjectname != null" >
+        subjectName,
+      </if>
+      <if test="subjecttype != null" >
+        subjectType,
+      </if>
+      <if test="subjectstate != null" >
+        subjectState,
+      </if>
+      <if test="createuser != null" >
+        createUser,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="updatetime != null" >
+        updateTime,
+      </if>
+      <if test="subjectcontent != null" >
+        subjectContent,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="subjectid != null" >
+        #{subjectid,jdbcType=VARCHAR},
+      </if>
+      <if test="teachid != null" >
+        #{teachid,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectname != null" >
+        #{subjectname,jdbcType=VARCHAR},
+      </if>
+      <if test="subjecttype != null" >
+        #{subjecttype,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectstate != null" >
+        #{subjectstate,jdbcType=INTEGER},
+      </if>
+      <if test="createuser != null" >
+        #{createuser,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="subjectcontent != null" >
+        #{subjectcontent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.lin.paper.pojo.PSubjectExample" resultType="java.lang.Integer" >
+    select count(*) from p_subject
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update p_subject
+    <set >
+      <if test="record.subjectid != null" >
+        subjectId = #{record.subjectid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.teachid != null" >
+        teachId = #{record.teachid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subjectname != null" >
+        subjectName = #{record.subjectname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subjecttype != null" >
+        subjectType = #{record.subjecttype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subjectstate != null" >
+        subjectState = #{record.subjectstate,jdbcType=INTEGER},
+      </if>
+      <if test="record.createuser != null" >
+        createUser = #{record.createuser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null" >
+        createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updatetime != null" >
+        updateTime = #{record.updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.subjectcontent != null" >
+        subjectContent = #{record.subjectcontent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update p_subject
+    set subjectId = #{record.subjectid,jdbcType=VARCHAR},
+      teachId = #{record.teachid,jdbcType=VARCHAR},
+      subjectName = #{record.subjectname,jdbcType=VARCHAR},
+      subjectType = #{record.subjecttype,jdbcType=VARCHAR},
+      subjectState = #{record.subjectstate,jdbcType=INTEGER},
+      createUser = #{record.createuser,jdbcType=VARCHAR},
+      createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      updateTime = #{record.updatetime,jdbcType=TIMESTAMP},
+      subjectContent = #{record.subjectcontent,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update p_subject
+    set subjectId = #{record.subjectid,jdbcType=VARCHAR},
+      teachId = #{record.teachid,jdbcType=VARCHAR},
+      subjectName = #{record.subjectname,jdbcType=VARCHAR},
+      subjectType = #{record.subjecttype,jdbcType=VARCHAR},
+      subjectState = #{record.subjectstate,jdbcType=INTEGER},
+      createUser = #{record.createuser,jdbcType=VARCHAR},
+      createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      updateTime = #{record.updatetime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lin.paper.pojo.PSubject" >
+    update p_subject
+    <set >
+      <if test="teachid != null" >
+        teachId = #{teachid,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectname != null" >
+        subjectName = #{subjectname,jdbcType=VARCHAR},
+      </if>
+      <if test="subjecttype != null" >
+        subjectType = #{subjecttype,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectstate != null" >
+        subjectState = #{subjectstate,jdbcType=INTEGER},
+      </if>
+      <if test="createuser != null" >
+        createUser = #{createuser,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null" >
+        updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="subjectcontent != null" >
+        subjectContent = #{subjectcontent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where subjectId = #{subjectid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.lin.paper.pojo.PSubject" >
+    update p_subject
+    set teachId = #{teachid,jdbcType=VARCHAR},
+      subjectName = #{subjectname,jdbcType=VARCHAR},
+      subjectType = #{subjecttype,jdbcType=VARCHAR},
+      subjectState = #{subjectstate,jdbcType=INTEGER},
+      createUser = #{createuser,jdbcType=VARCHAR},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      subjectContent = #{subjectcontent,jdbcType=LONGVARCHAR}
+    where subjectId = #{subjectid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lin.paper.pojo.PSubject" >
+    update p_subject
+    set teachId = #{teachid,jdbcType=VARCHAR},
+      subjectName = #{subjectname,jdbcType=VARCHAR},
+      subjectType = #{subjecttype,jdbcType=VARCHAR},
+      subjectState = #{subjectstate,jdbcType=INTEGER},
+      createUser = #{createuser,jdbcType=VARCHAR},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      updateTime = #{updatetime,jdbcType=TIMESTAMP}
+    where subjectId = #{subjectid,jdbcType=VARCHAR}
+  </update>
+</mapper>
